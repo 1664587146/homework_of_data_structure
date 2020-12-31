@@ -1,6 +1,16 @@
 /*
-    ¿ÉÄÜ³öÏÖa-z A-Z , .  " ` 0-9 ? ! - '\n' ¿Õ¸ñ
-    Ò»¹² 26 + 26 + 10 + 9 = 71¸ö
+Huffmanç¼–ç ä¸è§£ç (å¿…åš)ï¼ˆHuffmanç¼–ç ã€äºŒå‰æ ‘ï¼‰
+[é—®é¢˜æè¿°]
+å¯¹ä¸€ç¯‡ä¸å°‘äº5000å­—ç¬¦çš„è‹±æ–‡æ–‡ç« ï¼ˆsource.txtï¼‰ï¼Œç»Ÿè®¡å„å­—ç¬¦å‡ºç°çš„æ¬¡æ•°ï¼Œå®ç°Huffmanç¼–ç (code.dat)ï¼Œä»¥åŠå¯¹ç¼–ç ç»“æœçš„è§£ç (recode.txt)ã€‚
+[åŸºæœ¬è¦æ±‚]
+ï¼ˆ1ï¼‰ è¾“å‡ºæ¯ä¸ªå­—ç¬¦å‡ºç°çš„æ¬¡æ•°å’Œç¼–ç ,å¹¶å­˜å‚¨æ–‡ä»¶(Huffman.txt)ã€‚
+ï¼ˆ2ï¼‰ åœ¨Huffmanç¼–ç åï¼Œè‹±æ–‡æ–‡ç« ç¼–ç ç»“æœä¿å­˜åˆ°æ–‡ä»¶ä¸­(code.dat)ï¼Œç¼–ç ç»“æœå¿…é¡»æ˜¯äºŒè¿›åˆ¶å½¢å¼ï¼Œå³0 1çš„ä¿¡æ¯ç”¨æ¯”ç‰¹ä½è¡¨ç¤ºï¼Œä¸èƒ½ç”¨å­—ç¬¦â€™0â€™å’Œâ€™1â€™è¡¨ç¤ºï¼ˆ*ï¼‰ã€‚
+ï¼ˆ3ï¼‰ å®ç°è§£ç åŠŸèƒ½ã€‚
+*/
+
+/*
+    å¯èƒ½å‡ºç°a-z A-Z , .  " ` 0-9 ? ! - '\n' ç©ºæ ¼
+    ä¸€å…± 26 + 26 + 10 + 9 = 71ä¸ª
 */
 #include<stdio.h>
 #include<stdlib.h>
@@ -8,23 +18,23 @@
 #define COUNT_OF_CHAR 71
 
 /*
-    ÕâÀïÊ÷µÄ½Úµã½«·ÅÖÃÓÚÒ»¸öÊı×éÄÚ£¬Ã¿´Î»Ø½øĞĞÎ¬»¤£¬ÏûÊ§µÄ¶¥µãÔò»á½«È¨ÖµÖÃÁã¡£
-    ²âÊÔÀı×Ó¿É²é¿´ÊéÉÏ
+    è¿™é‡Œæ ‘çš„èŠ‚ç‚¹å°†æ”¾ç½®äºä¸€ä¸ªæ•°ç»„å†…ï¼Œæ¯æ¬¡å›è¿›è¡Œç»´æŠ¤ï¼Œæ¶ˆå¤±çš„é¡¶ç‚¹åˆ™ä¼šå°†æƒå€¼ç½®é›¶ã€‚
+    æµ‹è¯•ä¾‹å­å¯æŸ¥çœ‹ä¹¦ä¸Š
 */
-//nodeµÄ¶¨Òå
+//nodeçš„å®šä¹‰
 #define  max_weight INT_MAX
 typedef struct
 {
-	int weight;//È¨Öµ
+	int weight;//æƒå€¼
     char info;
 	int parent,lchild,rchild;
 }HTNode, *HuffmanTree;
-//ÕâÉÏÃæ¸¨Öú¿Õ¼äÊÇÏßĞÔ±í
+//è¿™ä¸Šé¢è¾…åŠ©ç©ºé—´æ˜¯çº¿æ€§è¡¨
 typedef char **HuffmanCode;
 
 static char character[COUNT_OF_CHAR] =
 /*
-    ¿ÉÄÜ³öÏÖµÄ×Ö·û
+    å¯èƒ½å‡ºç°çš„å­—ç¬¦
 */
 {
     'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V',
@@ -35,11 +45,11 @@ static char character[COUNT_OF_CHAR] =
 
 int read_and_statistic(int *times)
 {
-    //timesÊÇ¼ÆÊıÊı×é,¶ÔÓ¦¹ØÏµ characters[i]µÄ³öÏÖ´ÎÊı =  times[i]
+    //timesæ˜¯è®¡æ•°æ•°ç»„,å¯¹åº”å…³ç³» characters[i]çš„å‡ºç°æ¬¡æ•° =  times[i]
     FILE *file = fopen("resource.txt","r");
     if(!file)
     {
-        printf("ÎÄ¼ş²Ù×÷Ê§°Ü£»\n");
+        printf("æ–‡ä»¶æ“ä½œå¤±è´¥ï¼›\n");
         exit (0);
     }
     char a_line_of_data_in_file[7000];
@@ -66,17 +76,17 @@ int read_and_statistic(int *times)
 
 int HuffmanCoding(HuffmanTree *HT, HuffmanCode *HC , int *times)
 {
-    //timesÊÇ¼ÆÊıÊı×é,¶ÔÓ¦¹ØÏµ characters[i]µÄ³öÏÖ´ÎÊı =  times[i]
+    //timesæ˜¯è®¡æ•°æ•°ç»„,å¯¹åº”å…³ç³» characters[i]çš„å‡ºç°æ¬¡æ•° =  times[i]
     int size, room;
-    //size ½ÚµãÊı
+    //size èŠ‚ç‚¹æ•°
 
-    //(size *2 - 1) ÊÇ»ô·òÂüÊ÷µÄ¿Õ¼ä
+    //(size *2 - 1) æ˜¯éœå¤«æ›¼æ ‘çš„ç©ºé—´
     //m 
     size = COUNT_OF_CHAR ;
     room = (size *2 - 1);
     (*HT) = ( HuffmanTree ) calloc( room ,sizeof(HTNode));
     int i , j , p , min1 , min2;
-    //ÏÂÃæ¿ªÊ¼³õÊ¼»¯
+    //ä¸‹é¢å¼€å§‹åˆå§‹åŒ–
     for (i = 0 ,p = 0 ; i < size; i++ , p++)
     {
         (*HT)[p]. weight = times[i];
@@ -85,13 +95,13 @@ int HuffmanCoding(HuffmanTree *HT, HuffmanCode *HC , int *times)
         (*HT)[p]. lchild = 0;
         (*HT)[p]. rchild = 0;
     }
-    //ÒòÎªÊÇcalloc ËùÒÔÆäËûÔÚÉêÇëÊ±×Ô¶¯Çå¿ÕÁË
-    //ÏÂÃæ¿ªÊ¼½¨Ê÷
+    //å› ä¸ºæ˜¯calloc æ‰€ä»¥å…¶ä»–åœ¨ç”³è¯·æ—¶è‡ªåŠ¨æ¸…ç©ºäº†
+    //ä¸‹é¢å¼€å§‹å»ºæ ‘
     int state ; 
     for(i = size ; i < room ; i++)
     {
-        //Ñ¡Ôñparent = 0£»ÇÒ×îĞ¡µÄÁ½¸ö
-        //ÕÒµã
+        //é€‰æ‹©parent = 0ï¼›ä¸”æœ€å°çš„ä¸¤ä¸ª
+        //æ‰¾ç‚¹
         for(p = 0,state = 0,min1  = max_weight;p < i; p ++)
         {
             if((*HT)[p] . weight < min1 && !(*HT)[p] . parent)
@@ -102,7 +112,7 @@ int HuffmanCoding(HuffmanTree *HT, HuffmanCode *HC , int *times)
             }
         }
         if(state)
-            min1 = j ;//Èç¹û·¢ÉúÁË½»»»ÔòÒªÖØĞÂ¸³Öµ£¬min2Ò»Ñù
+            min1 = j ;//å¦‚æœå‘ç”Ÿäº†äº¤æ¢åˆ™è¦é‡æ–°èµ‹å€¼ï¼Œmin2ä¸€æ ·
         else
         {
             min1 = 1;
@@ -124,14 +134,14 @@ int HuffmanCoding(HuffmanTree *HT, HuffmanCode *HC , int *times)
             min2 = 1;
         }
         (*HT)[min2] . parent = 1; 
-        //Á½¸öµãÕÒµ½
-        //ÏÂÃæ¿ªÊ¼½¨Ê÷
+        //ä¸¤ä¸ªç‚¹æ‰¾åˆ°
+        //ä¸‹é¢å¼€å§‹å»ºæ ‘
         (*HT)[min1]  . parent = (*HT)[min2] . parent = i;
         (*HT)[i] . lchild = min1;
         (*HT)[i] . rchild = min2;
         (*HT)[i] . weight = (*HT)[min1] . weight + (*HT)[min2] . weight;
     }
-    //ÏÂÃæ¿ªÊ¼±àÂë
+    //ä¸‹é¢å¼€å§‹ç¼–ç 
     char *cd;
     int start;
     *HC = (HuffmanCode) calloc((size ) , sizeof(char *));
@@ -151,7 +161,7 @@ int HuffmanCoding(HuffmanTree *HT, HuffmanCode *HC , int *times)
     FILE *file = fopen("Huffman.txt","w");
     if(!file)
     {
-        printf("Huffman.txt,´´½¨Ê§°Ü");
+        printf("Huffman.txt,åˆ›å»ºå¤±è´¥");
         exit(0);
     }
     for ( j = 0; j < COUNT_OF_CHAR; j++)
@@ -163,12 +173,12 @@ int HuffmanCoding(HuffmanTree *HT, HuffmanCode *HC , int *times)
 }
 
 int saving(HuffmanCode HC)
-//ÒòÎª¼¼Êõ²»×ã£¬ÎŞ·¨°´bitÎ»Ğ´Èë£¬ËùÒÔ»¹ÊÇ"0","1"ÁË
+//å› ä¸ºæŠ€æœ¯ä¸è¶³ï¼Œæ— æ³•æŒ‰bitä½å†™å…¥ï¼Œæ‰€ä»¥è¿˜æ˜¯"0","1"äº†
 {
     FILE *file_r = fopen("resource.txt","r"),*file_w = fopen("code.dat","wb");
     if(!file_r ||!file_w )
     {
-        printf("ÎÄ¼ş²Ù×÷Ê§°Ü£»\n");
+        printf("æ–‡ä»¶æ“ä½œå¤±è´¥ï¼›\n");
         exit (0);
     }
     char a_line_of_data_in_file[7000];
@@ -198,55 +208,55 @@ int saving(HuffmanCode HC)
 
 int recoding(HuffmanTree *HT)
 /*
-    ½âÂë£º
-    Ã¿´Î×î¶à¶Á16¸ö×Ö½Ú£¬È»ºóÈç¹ûÕÒµ½ÁË£¬
-    ¾Í½«ºóÃæÎ´´¦ÀíµÄ´¦Àí£¬
-    Èç¹ûÒÑ¶ÁÈ¡µÄ×Ö½Ú²»¹»ÁË£¬ÔòÔÙ¶ÁÈ¡16¸ö×Ö½Ú
+    è§£ç ï¼š
+    æ¯æ¬¡æœ€å¤šè¯»16ä¸ªå­—èŠ‚ï¼Œç„¶åå¦‚æœæ‰¾åˆ°äº†ï¼Œ
+    å°±å°†åé¢æœªå¤„ç†çš„å¤„ç†ï¼Œ
+    å¦‚æœå·²è¯»å–çš„å­—èŠ‚ä¸å¤Ÿäº†ï¼Œåˆ™å†è¯»å–16ä¸ªå­—èŠ‚
 */
 {
     FILE *file_r = fopen("code.dat","rb");
     FILE *file_w = fopen("recode.txt","w");
     if(!file_r ||!file_w )
     {
-        printf("ÎÄ¼ş²Ù×÷Ê§°Ü£»\n");
+        printf("æ–‡ä»¶æ“ä½œå¤±è´¥ï¼›\n");
         exit (0);
     }
     char a_line_of_data_in_file[MAX_BYTE];
     int i = 0;
     int state = 1;
-    //ÊÇÑ­»·±äÁ¿
+    //æ˜¯å¾ªç¯å˜é‡
     int  node = COUNT_OF_CHAR * 2 - 1 - 1;
-    //¾ÍÊÇ½¨¹ş·òÂüÊ÷Ê±µÄroom = (size *2 - 1);
-    //¶øÇÒ´Ó0¿ªÊ¼
+    //å°±æ˜¯å»ºå“ˆå¤«æ›¼æ ‘æ—¶çš„room = (size *2 - 1);
+    //è€Œä¸”ä»0å¼€å§‹
     fread(a_line_of_data_in_file, 1 ,MAX_BYTE,file_r);
-    //ÏÂÃæ¿ªÊ¼ÔÚHuffmanÊ÷ÕÒ
+    //ä¸‹é¢å¼€å§‹åœ¨Huffmanæ ‘æ‰¾
     for (;;)
     {
         if((*HT)[node] .lchild == 0 && (*HT)[node] .rchild == 0)
         {
             fputc((*HT)[node] . info ,file_w); 
-            //node¸´Î»
+            //nodeå¤ä½
             node = COUNT_OF_CHAR * 2 - 1 - 1;
         }
         else if(a_line_of_data_in_file[i] == '0' )
-        //×óº¢×Ó0 ÓÒº¢×Ó1
+        //å·¦å­©å­0 å³å­©å­1
         {
             node = (*HT)[node] . lchild;
             i ++ ;
             i = i  % MAX_BYTE;
-            //¶Áµ½½áÎ²
+            //è¯»åˆ°ç»“å°¾
             if(i == 0)
             {
                 state = fread(a_line_of_data_in_file, sizeof(char) ,MAX_BYTE,file_r);
             }
         }
-        //ÓÒº¢×Ó²î²»¶à
+        //å³å­©å­å·®ä¸å¤š
         else if(a_line_of_data_in_file[i] == '1' )
         {
             node = (*HT)[node] . rchild;
             i ++;
             i = i % MAX_BYTE;
-            //¶Áµ½½áÎ²
+            //è¯»åˆ°ç»“å°¾
             if(i == 0)
             {
                 state = fread(a_line_of_data_in_file, sizeof(char) ,MAX_BYTE,file_r);
@@ -271,14 +281,14 @@ int main()
     HuffmanCoding(&HT,&HC,times);
     int i;/*
     for( i = 0;i < COUNT_OF_CHAR ; i++)
-        printf("%cµÄ±àÂëÊÇ:%s\n",HT[i].info ,HC[i]);*/
+        printf("%cçš„ç¼–ç æ˜¯:%s\n",HT[i].info ,HC[i]);*/
     saving(HC);
     recoding(&HT);
     for ( i = 0; i < COUNT_OF_CHAR ; i++)
     {
         free(HC[i]);
     }
-    //hc ºÍ htÏàµ±ÓÚÖ÷³ÌĞòÉêÇë£¬»áºÍÖ÷³ÌĞòÒ»ÆğÏûÊ§
+    //hc å’Œ htç›¸å½“äºä¸»ç¨‹åºç”³è¯·ï¼Œä¼šå’Œä¸»ç¨‹åºä¸€èµ·æ¶ˆå¤±
     system("Pause");
     return (0);
 }
